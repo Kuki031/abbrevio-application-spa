@@ -1,1 +1,40 @@
-<p>login works!</p>
+<div class="container">
+    <mat-card appearance="outlined">
+        <form>
+            <div class="register-container">
+                <mat-card-title>Login</mat-card-title>
+                <mat-form-field>
+                <mat-label>Enter your email</mat-label>
+                <input
+                    matInput
+                    placeholder="pat@example.com"
+                    [formControl]="email"
+                    (blur)="updateErrorMessage()"
+                    required
+                />
+                @if (email.invalid) {
+                    <mat-error>{{errorMessage()}}</mat-error>
+                }
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Enter your password</mat-label>
+                    <input matInput [type]="hide() ? 'password' : 'text'" />
+                    <button
+                    mat-icon-button
+                    matSuffix
+                    (click)="clickEvent($event)"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide()"
+                    >
+                    <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <div class="register-container__option">
+                <button mat-raised-button>Log in</button>
+            </div>
+            </div>
+
+        </form>
+</mat-card>
+</div>

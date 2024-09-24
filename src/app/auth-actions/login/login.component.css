@@ -1,0 +1,45 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5px;
+    transform: translateY(25px);
+    animation: .5s fadein ease-in-out;
+}
+
+.register-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.register-container__option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+}
+
+.register-container mat-form-field,
+mat-card-title,
+h3 {
+    margin: 10px;
+    padding: 5px;
+}
+
+mat-card-content,
+mat-card-title {
+    color: #fff;
+}
+
+@keyframes fadein {
+    0% {
+        transform: translateY(-200px);
+    }
+
+    100% {
+        transform: translateY(25px);
+    }
+}
