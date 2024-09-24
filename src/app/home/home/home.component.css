@@ -1,0 +1,29 @@
+.sm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    animation: fadein .5s ease-in-out;
+    transform: translateY(25px);
+}
+
+.sm mat-card-title {
+    color: #fff;
+}
+
+.sm mat-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+@keyframes fadein {
+    0% {
+        transform: translateY(-200px);
+    }
+
+    100% {
+        transform: translateY(25px);
+    }
+}
