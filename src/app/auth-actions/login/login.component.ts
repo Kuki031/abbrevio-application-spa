@@ -54,7 +54,10 @@ export class LoginComponent {
     }
 
     this.authService.login(usernameValue, passwordValue).subscribe(
-      (user) => console.log('Login successful', user),
+      (user) => {
+        localStorage.setItem(user.tokenType, user.accessToken);
+        location.assign("home");
+      },
       (error) => console.error('Login failed', error)
     );
   }

@@ -1,5 +1,5 @@
 <div class="sm">
-<mat-card appearance="outlined">
+<mat-card appearance="outlined" *ngIf="!isLoggedIn">
     <mat-card-header>
       <mat-card-title> Welcome to Abbrevio application</mat-card-title>
       <mat-card-subtitle>Log in or register to get started</mat-card-subtitle>
@@ -9,4 +9,12 @@
         <a mat-raised-button href="register">Register</a>
     </mat-card-actions>
   </mat-card>
+
+  <!--
+  <mat-card appearance="outlined" *ngIf="isLoggedIn">
+    <mat-card-header>
+      <mat-card-title> Welcome to Abbrevio application</mat-card-title>
+    </mat-card-header>
+  </mat-card>
+  -->
 </div>

@@ -3,13 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { User } from '../../models/user';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthActionsService {
 
-  private apiUrl = "http://localhost:8080/api/auth/login";
+  private apiUrl = `${environment.apiUrl}/auth/login`;
+  private tokenType = "Bearer";
 
   constructor(private http: HttpClient) { }
 
@@ -20,5 +22,9 @@ export class AuthActionsService {
 
     const body = JSON.stringify({ username, password });
     return this.http.post<User>(this.apiUrl, body, { headers });
+  }
+
+  logout(): void {
+    localStorage.removeItem(this.tokenType);
   }
 }
