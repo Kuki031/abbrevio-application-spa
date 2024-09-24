@@ -1,12 +1,19 @@
 <header class="header">
     <div class="header-container">
-        <div class="header-container__info">
-            <a mat-raised-button href="home">Home</a>
-        </div>
-
-        <div class="header-container__options">
-            <a mat-raised-button href="login">Login</a>
-            <a mat-raised-button href="register">Register</a>
-        </div>
-</div>
-</header>
+      <div class="header-container__info">
+        <a mat-raised-button href="home">Home</a>
+      </div>
+  
+      <div class="header-container__options">
+        <ng-container *ngIf="isLoggedIn; else loggedOut">
+          <a mat-raised-button href="dashboard">Dashboard</a>
+          <a mat-raised-button (click)="logOut()">Logout</a>
+        </ng-container>
+        <ng-template #loggedOut>
+          <a mat-raised-button href="login">Login</a>
+          <a mat-raised-button href="register">Register</a>
+        </ng-template>
+      </div>
+    </div>
+  </header>
+  
