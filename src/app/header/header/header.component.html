@@ -7,7 +7,7 @@
       <div class="header-container__options">
         <ng-container *ngIf="isLoggedIn; else loggedOut">
           <a mat-raised-button href="dashboard">Dashboard</a>
-          <a mat-raised-button href="logout">Logout</a>
+          <a mat-raised-button (click)="logOut()">Logout</a>
         </ng-container>
         <ng-template #loggedOut>
           <a mat-raised-button href="login">Login</a>
