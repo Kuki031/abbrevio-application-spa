@@ -5,7 +5,6 @@
     flex-direction: column;
     justify-content: center;
     margin: 5px;
-    transform: translateY(25px);
     animation: .5s fadein ease-in-out;
 }
 
@@ -36,10 +35,10 @@ mat-card-title {
 
 @keyframes fadein {
     0% {
-        transform: translateY(-200px);
+        opacity: 0;
     }
 
     100% {
-        transform: translateY(25px);
+        opacity: 1;
     }
 }
