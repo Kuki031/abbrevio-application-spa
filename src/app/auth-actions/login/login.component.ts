@@ -7,39 +7,60 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { merge } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
+import { AuthActionsService } from '../auth-service/auth-actions.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatIconModule, MatButtonModule, MatCardModule],
+  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatIconModule, MatButtonModule, MatCardModule, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  readonly email = new FormControl('', [Validators.required, Validators.email]);
+  readonly username = new FormControl('', [Validators.required]);
+  readonly password = new FormControl('', [Validators.required]);
 
   errorMessage = signal('');
 
   hide = signal(true);
-  clickEvent(event: MouseEvent) {
-    this.hide.set(!this.hide());
-    event.stopPropagation();
-  }
 
-  constructor() {
-    merge(this.email.statusChanges, this.email.valueChanges)
+  constructor(private authService: AuthActionsService) {
+    merge(this.username.statusChanges, this.username.valueChanges, this.password.statusChanges, this.password.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
   }
 
   updateErrorMessage() {
-    if (this.email.hasError('required')) {
+    if (this.username.hasError('required')) {
       this.errorMessage.set('You must enter a value');
-    } else if (this.email.hasError('email')) {
-      this.errorMessage.set('Not a valid email');
+    } else if (this.username.hasError('username')) {
+      this.errorMessage.set('Not a valid username');
+    } else if (this.password.hasError('required')) {
+      this.errorMessage.set('Password is required');
     } else {
       this.errorMessage.set('');
     }
+  }
+
+  login(): void {
+    const usernameValue = this.username.value || '';
+    const passwordValue = this.password.value || '';
+
+    if (!this.username.valid || !this.password.valid) {
+      console.error('Form is invalid');
+      return;
+    }
+
+    this.authService.login(usernameValue, passwordValue).subscribe(
+      (user) => console.log('Login successful', user),
+      (error) => console.error('Login failed', error)
+    );
+  }
+
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 }
