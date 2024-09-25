@@ -1,0 +1,45 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    animation: fadein ease-in-out 1s;
+}
+
+.container__form {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.container__form>button {
+    font-size: 15px;
+}
+
+table {
+    width: auto;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+td mat-card {
+    margin: 0;
+    box-shadow: none;
+    border: none;
+}
+
+.container-table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    width: 75%;
+    animation: fadein 1s ease-in-out;
+}

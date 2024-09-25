@@ -21,15 +21,3 @@
     gap: 5px;
     margin: 5px;
 }
-
-@media (max-width: 450px) {
-
-    a[mat-raised-button],
-    button[mat-raised-button] {
-        padding: 2px;
-        margin: 2px;
-        font-size: 10px;
-        border-radius: 2px;
-        box-shadow: none;
-    }
-}

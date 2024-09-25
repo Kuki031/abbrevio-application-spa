@@ -11,6 +11,41 @@ body {
 }
 
 a[mat-raised-button],
-button[mat-raised-button] {
+button[mat-raised-button],
+button[mat-button],
+button[mat-stroked-button] {
     border-radius: 2px;
+}
+
+
+@media (max-width: 450px) {
+
+    a[mat-raised-button],
+    button[mat-raised-button] {
+        padding: 2px;
+        margin: 2px;
+        font-size: 10px;
+        border-radius: 2px;
+        box-shadow: none;
+    }
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
