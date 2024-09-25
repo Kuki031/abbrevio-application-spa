@@ -1,60 +1,96 @@
 <div class="container">
     <mat-card appearance="outlined">
-        <form>
-            <div class="register-container">
-                <mat-card-title>Register</mat-card-title>
-
-                <mat-form-field>
-                    <mat-label>Enter your username</mat-label>
-                    <input matInput placeholder="username">
-                  </mat-form-field>
-
-                <mat-form-field>
-                <mat-label>Enter your email</mat-label>
-                <input
-                    matInput
-                    placeholder="pat@example.com"
-                    [formControl]="email"
-                    (blur)="updateErrorMessage()"
-                    required
-                />
-                @if (email.invalid) {
-                    <mat-error>{{errorMessage()}}</mat-error>
-                }
-                </mat-form-field>
-
-                <mat-form-field>
-                    <mat-label>Enter your password</mat-label>
-                    <input matInput [type]="hide() ? 'password' : 'text'" />
-                    <button
-                    mat-icon-button
-                    matSuffix
-                    (click)="clickEvent($event)"
-                    [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide()"
-                    >
-                    <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <mat-label>Repeat your password</mat-label>
-                    <input matInput [type]="hide() ? 'password' : 'text'" />
-                    <button
-                    mat-icon-button
-                    matSuffix
-                    (click)="clickEvent($event)"
-                    [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide()"
-                    >
-                    <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
-                </mat-form-field>
-                <div class="register-container__option">
-                <button mat-raised-button>Register</button>
-            </div>
-            </div>
-
-        </form>
-</mat-card>
-</div>
+      <form>
+        <div class="register-container">
+          <mat-card-title>Register</mat-card-title>
+  
+          <mat-form-field>
+            <mat-label>Enter your username</mat-label>
+            <input matInput placeholder="username" [formControl]="username" />
+            <mat-error *ngIf="username.invalid && username.touched">
+              Username is required
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field>
+            <mat-label>Enter your email</mat-label>
+            <input
+              matInput
+              placeholder="pat@example.com"
+              [formControl]="email"
+              (blur)="updateErrorMessage()"
+              required
+            />
+            <mat-error *ngIf="email.invalid && email.touched">
+              {{ errorMessage() }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field>
+            <mat-label>Enter your password</mat-label>
+            <input
+              matInput
+              [type]="hide() ? 'password' : 'text'"
+              [formControl]="password"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="clickEvent($event)"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide()"
+              type="button"
+            >
+              <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="password.invalid && password.touched">
+              Password is required
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field>
+            <mat-label>Repeat your password</mat-label>
+            <input
+              matInput
+              [type]="hide() ? 'password' : 'text'"
+              [formControl]="passwordConfirm"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="clickEvent($event)"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide()"
+              type="button"
+            >
+              <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error
+              *ngIf="
+                passwordConfirm.invalid && passwordConfirm.touched ||
+                passwordConfirm.value !== password.value
+              "
+            >
+              Passwords must match
+            </mat-error>
+          </mat-form-field>
+  
+          <div class="register-container__option">
+            <button
+              mat-raised-button
+              (click)="register($event)"
+              [disabled]="
+                email.invalid ||
+                username.invalid ||
+                password.invalid ||
+                passwordConfirm.value !== password.value
+              "
+            >
+              Register
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+  
