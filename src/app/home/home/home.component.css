@@ -2,12 +2,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px;
+    margin: 5px;
     animation: fadein .5s ease-in-out;
-}
-
-.sm mat-card-title {
-    color: #fff;
 }
 
 .sm mat-card {
@@ -15,6 +11,11 @@
     align-items: center;
     justify-content: center;
     margin: auto;
+}
+
+
+mat-card-actions>a {
+    margin: 5px;
 }
 
 @keyframes fadein {

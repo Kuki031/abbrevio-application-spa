@@ -2,8 +2,10 @@
     <div class="header-container">
       <div class="header-container__info">
         <a mat-raised-button href="home">Home</a>
+        <button mat-raised-button (click)="openDialog()">About</button>
       </div>
-  
+      <div>
+      </div>
       <div class="header-container__options">
         <ng-container *ngIf="isLoggedIn; else loggedOut">
           <a mat-raised-button href="dashboard">Dashboard</a>
@@ -16,4 +18,3 @@
       </div>
     </div>
   </header>
-  
