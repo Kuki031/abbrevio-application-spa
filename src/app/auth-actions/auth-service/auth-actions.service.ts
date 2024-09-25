@@ -9,9 +9,9 @@ import { environment } from '../../../environments/environment.development';
   providedIn: 'root'
 })
 export class AuthActionsService {
-
-  private apiUrl = `${environment.apiUrl}/auth/login`;
+  ;
   private tokenType = "Bearer";
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -20,11 +20,16 @@ export class AuthActionsService {
       'Content-Type': 'application/json'
     });
 
-    const body = JSON.stringify({ username, password });
-    return this.http.post<User>(this.apiUrl, body, { headers });
+    const body = { username, password };
+    return this.http.post<User>(`${this.apiUrl}/auth/login`, body, { headers });
   }
 
   logout(): void {
     localStorage.removeItem(this.tokenType);
+  }
+
+  register(username: string, email: string, password: string): Observable<void> {
+    const requestBody = { username, email, password };
+    return this.http.post<void>(`${this.apiUrl}/auth/register`, requestBody);
   }
 }

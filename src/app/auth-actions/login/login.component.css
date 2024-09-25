@@ -28,17 +28,8 @@ h3 {
     padding: 5px;
 }
 
-.snackbar {
-    background-color: crimson;
-}
-
-.hidden {
-    display: none;
-}
-
-mat-card-content,
-mat-card-title {
-    color: #fff;
+.g {
+    margin: 5px;
 }
 
 @keyframes fadein {

@@ -1,0 +1,14 @@
+.modal-card,
+mat-card-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: auto;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 5px;
+}
+
+mat-card-title {
+    margin: 15px;
+}
