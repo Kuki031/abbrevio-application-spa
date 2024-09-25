@@ -85,9 +85,11 @@
                 password.invalid ||
                 passwordConfirm.value !== password.value
               "
+              *ngIf="!isClicked"
             >
               Register
             </button>
+            <mat-spinner *ngIf="isClicked" diameter="30" class="g"></mat-spinner>
           </div>
         </div>
       </form>

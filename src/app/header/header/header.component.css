@@ -22,7 +22,7 @@
     margin: 5px;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
 
     a[mat-raised-button],
     button[mat-raised-button] {

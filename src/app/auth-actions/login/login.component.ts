@@ -67,10 +67,10 @@ export class LoginComponent {
 
         if (user) {
           setTimeout(() => {
-            location.assign('home');
+            location.assign('abbreviations');
             this.isClicked = false;
             this.cdRef.detectChanges();
-          }, 2000);
+          }, 1000);
         }
       },
       (error) => {

@@ -28,6 +28,10 @@ h3 {
     padding: 5px;
 }
 
+.g {
+    margin: 5px;
+}
+
 @keyframes fadein {
     0% {
         opacity: 0;
