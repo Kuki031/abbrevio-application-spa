@@ -12,3 +12,10 @@ mat-card-content {
 mat-card-title {
     margin: 15px;
 }
+
+mat-card-actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}

@@ -2,6 +2,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
     margin: 5px;
     animation: fadein ease-in-out 1s;
 }
@@ -30,6 +32,13 @@ td mat-card {
     margin: 0;
     box-shadow: none;
     border: none;
+}
+
+.options__container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 5px;
 }
 
 .container-table {

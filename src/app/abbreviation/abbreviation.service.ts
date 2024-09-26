@@ -21,4 +21,12 @@ export class AbbreviationService {
     return this.http.get<Abbreviation>(`${this.apiUrl}/${id}`);
   }
 
+  getMyAbbreviations(): Observable<Abbreviation[]> {
+    return this.http.get<Abbreviation[]>(`${this.apiUrl}/my-abbreviations`, { headers: { "Authorization": `Bearer ${localStorage.getItem("Bearer")}` } });
+  }
+
+  deleteAbbreviation(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: { "Authorization": `Bearer ${localStorage.getItem("Bearer")}` } });
+  }
+
 }
