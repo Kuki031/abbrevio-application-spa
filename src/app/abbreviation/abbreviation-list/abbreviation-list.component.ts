@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { AbbreviationService } from '../abbreviation.service';
-import { OnInit } from '@angular/core';
 import { Abbreviation } from '../../models/abbreviation';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,30 +20,40 @@ import { MatTableModule } from '@angular/material/table';
 })
 
 
-export class AbbreviationListComponent implements OnInit {
+export class AbbreviationListComponent {
 
   abbreviationList: Abbreviation[] = [];
   constructor(private abbreviationService: AbbreviationService) { }
   searchTerm: string = "";
   hasSearched: boolean = false;
-  displayedColumns: string[] = ['id', 'abbreviation', 'actions'];
+  displayedColumns: string[] = ['id', 'abbreviation', 'actions', 'created_by'];
   private _snackBar = inject(MatSnackBar);
 
   searchAbbreviations(): void {
+    if (!this.searchTerm) {
+      this.openSnackBar("Empty input!", "close");
+      this.hasSearched = false;
+      return;
+    }
     this.abbreviationService.getMatchedAbbreviations(this.searchTerm).subscribe(
       (abbreviations: Abbreviation[]) => {
         this.abbreviationList = abbreviations;
+
+        if (!this.abbreviationList.length) {
+          this.openSnackBar(`No matches for search term '${this.searchTerm}'.`, "close");
+          this.hasSearched = false;
+          return;
+        }
+
         this.hasSearched = true;
       },
       (error) => {
-        this.openSnackBar("Empty input!", "close");
+        this.hasSearched = false;
+        console.error(error);
       }
     );
   }
 
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {

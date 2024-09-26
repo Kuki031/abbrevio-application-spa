@@ -1,4 +1,7 @@
 export interface Abbreviation {
     id: number,
-    name: string
+    name: string,
+    user?: {
+        username: string
+    }
 }

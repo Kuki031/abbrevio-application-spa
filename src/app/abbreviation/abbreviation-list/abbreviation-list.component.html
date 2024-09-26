@@ -2,13 +2,14 @@
     <form class="container__form" (ngSubmit)="searchAbbreviations()">
       <mat-form-field>
         <mat-label>Search for abbreviations</mat-label>
-        <input matInput placeholder="Ex. bacc.oec" [(ngModel)]="searchTerm" name="searchTerm">
+        <div class="form__wrap">
+        <input matInput placeholder="Ex. mngm" [(ngModel)]="searchTerm" name="searchTerm">
+      </div>
       </mat-form-field>
-      <button type="submit" mat-button>Search</button>
     </form>
   </div>
 
-  <div *ngIf="hasSearched" class="container-table">
+  <div *ngIf="hasSearched && abbreviationList.length" class="container-table">
         <table mat-table [dataSource]="abbreviationList" class="mat-elevation-z8">
       
           <ng-container matColumnDef="id">
@@ -22,11 +23,17 @@
           </ng-container>
       
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let abbs" class="actions-cell">
-              <button mat-button>View meanings</button>
+              <button mat-button>Meanings</button>
             </td>
           </ng-container>
+
+          <ng-container matColumnDef="created_by">
+            <th mat-header-cell *matHeaderCellDef> Created by </th>
+            <td mat-cell *matCellDef="let abbs">{{ abbs.user ? abbs.user.username : "No info" }}</td>
+          </ng-container>
+  
       
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

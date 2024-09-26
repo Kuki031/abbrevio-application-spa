@@ -12,21 +12,18 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 5px;
 }
 
 .container__form>button {
     font-size: 15px;
 }
 
-table {
-    width: auto;
-    border-collapse: collapse;
+th {
+    font-weight: bold;
 }
 
-th {
-    background-color: #f5f5f5;
-    font-weight: bold;
+table {
+    margin: 15px;
 }
 
 td mat-card {
@@ -42,4 +39,10 @@ td mat-card {
     margin: auto;
     width: 75%;
     animation: fadein 1s ease-in-out;
+}
+
+.form__wrap {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
