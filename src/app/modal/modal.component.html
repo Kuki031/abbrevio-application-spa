@@ -1,0 +1,10 @@
+<mat-card class="modal-card">
+    <mat-card-header>
+      <mat-card-title>{{ data.title || 'Modal Title' }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p *ngFor="let item of data.content">{{ item }}</p>
+      <button mat-raised-button (click)="onNoClick()">{{ data.closeText || 'Close' }}</button>
+    </mat-card-content>
+  </mat-card>
+  

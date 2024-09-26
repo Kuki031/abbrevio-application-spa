@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5px;
+    animation: fadein 1s ease-in-out;
+}

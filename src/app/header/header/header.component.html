@@ -8,6 +8,7 @@
       </div>
       <div class="header-container__options">
         <ng-container *ngIf="isLoggedIn; else loggedOut">
+          <a mat-raised-button href="profile">My profile</a>
           <a mat-raised-button href="abbreviations">Abbreviations</a>
           <a mat-raised-button (click)="logOut()">Logout</a>
         </ng-container>

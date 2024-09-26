@@ -26,7 +26,7 @@ export class AbbreviationListComponent {
   constructor(private abbreviationService: AbbreviationService) { }
   searchTerm: string = "";
   hasSearched: boolean = false;
-  displayedColumns: string[] = ['id', 'abbreviation', 'actions', 'created_by'];
+  displayedColumns: string[] = ['id', 'abbreviation', 'created_by', 'actions'];
   private _snackBar = inject(MatSnackBar);
 
   searchAbbreviations(): void {
