@@ -5,6 +5,7 @@ import { RegisterComponent } from './auth-actions/register/register.component';
 import { authGuard, redirectIfAuthenticatedGuard } from './auth-actions/auth/guard.guard';
 import { AbbreviationListComponent } from './abbreviation/abbreviation-list/abbreviation-list.component';
 import { ProfileComponent } from './auth-actions/profile/profile.component';
+import { AbbrevationFormComponent } from './abbreviation/abbrevation-form/abbrevation-form.component';
 
 export const routes: Routes = [
     { path: "", redirectTo: "home", pathMatch: "full" },
@@ -12,5 +13,7 @@ export const routes: Routes = [
     { path: "login", component: LoginComponent, canActivate: [redirectIfAuthenticatedGuard] },
     { path: "register", component: RegisterComponent, canActivate: [redirectIfAuthenticatedGuard] },
     { path: "abbreviations", component: AbbreviationListComponent, canActivate: [authGuard] },
-    { path: "profile", component: ProfileComponent, canActivate: [authGuard] }
+    { path: "profile", component: ProfileComponent, canActivate: [authGuard] },
+    { path: "abbreviations/new", component: AbbrevationFormComponent, canActivate: [authGuard] },
+    { path: "abbreviations/update/:id", component: AbbrevationFormComponent, canActivate: [authGuard] }
 ];

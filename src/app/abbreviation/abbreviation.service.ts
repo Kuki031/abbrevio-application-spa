@@ -29,4 +29,21 @@ export class AbbreviationService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: { "Authorization": `Bearer ${localStorage.getItem("Bearer")}` } });
   }
 
+  updateAbbreviation(id: number, name: string): Observable<void> {
+
+    const reqBody = {
+      name
+    }
+
+    return this.http.patch<void>(`${this.apiUrl}/${id}`, reqBody, { headers: { "Authorization": `Bearer ${localStorage.getItem("Bearer")}`, 'Content-type': 'application/json' } })
+  }
+
+  createAbbreviation(name: string, userId: number): Observable<void> {
+    const reqBody = {
+      name: name,
+      user_id: userId
+    }
+    return this.http.post<void>(`${this.apiUrl}`, reqBody, { headers: { "Authorization": `Bearer ${localStorage.getItem("Bearer")}` } })
+  }
+
 }

@@ -3,8 +3,9 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    flex-direction: column;
+    flex-direction: row;
     margin: 5px;
+    gap: 10px;
     animation: fadein ease-in-out 1s;
 }
 
@@ -16,42 +17,155 @@
     justify-content: center;
 }
 
-.container__form>button {
-    font-size: 15px;
+.input-with-menu {
+    position: relative;
+    width: 300px;
 }
 
-th {
-    font-weight: bold;
+.mat-form-field {
+    width: 100%;
+}
+
+.mat-menu {
+    min-width: 200px;
+}
+
+.mat-menu-item {
+    transition: background-color 0.3s;
+}
+
+.mat-menu-item:hover {
+    background-color: #e0f7fa;
+}
+
+.hidden {
+    display: none;
+}
+
+
+
+.action__button--green {
+    color: #4CAF50;
+}
+
+.action__button--green:hover {
+    color: #fff;
+    background-color: #45a049;
+}
+
+.action__button--update {
+    text-decoration: none;
+    list-style: none;
+    color: #4021b1 !important;
+}
+
+.action__button--warn {
+    color: #d30b2d;
+}
+
+.container__form {
+    font-size: 15px;
 }
 
 table {
     margin: 15px;
+    width: 100%;
+    border-collapse: collapse;
 }
 
-td mat-card {
-    margin: 0;
-    box-shadow: none;
-    border: none;
+th,
+td {
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
 }
 
-.options__container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    gap: 5px;
+th {
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
 }
 
 .container-table {
     display: flex;
-    align-items: center;
     justify-content: center;
     margin: auto;
     width: 75%;
     animation: fadein 1s ease-in-out;
 }
 
-.form__wrap {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
+@media screen and (max-width: 450px) {
+    .container-table {
+        width: 75%;
+        margin: 0 auto;
+        padding: 0 5px;
+    }
+
+    table {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    th,
+    td {
+        padding: 5px;
+        font-size: 10px;
+    }
+
+    th {
+        font-size: 9px;
+    }
+
+    .actions-cell {
+        padding: 2px;
+        text-align: center;
+    }
+
+    button {
+        font-size: 9px;
+        padding: 2px 4px;
+    }
+
+    .options__container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .container-table {
+        width: 75%;
+        padding: 0 3px;
+    }
+
+    th,
+    td {
+        padding: 3px;
+        font-size: 9px;
+    }
+
+    th {
+        font-size: 10px;
+    }
+
+    button {
+        font-size: 8px;
+        padding: 1px 3px;
+    }
+
+    .options__container {
+        gap: 0;
+    }
+
+    .actions-cell {
+        padding: 1px;
+        text-align: center;
+    }
+
+    table {
+        margin: 3px 0;
+    }
 }

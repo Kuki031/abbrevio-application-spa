@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -7,7 +7,6 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
-import { ModalComponent } from '../../modals/confirm-modal/modal.component';
 import { WelcomeModalComponent } from '../../modals/welcome-modal/welcome-modal.component';
 
 
@@ -20,6 +19,7 @@ import { WelcomeModalComponent } from '../../modals/welcome-modal/welcome-modal.
 })
 export class HeaderComponent implements OnInit {
 
+  isMobileView: boolean = false;
   constructor(private authService: AuthActionsService, public dialog: MatDialog) { }
 
 
@@ -39,7 +39,17 @@ export class HeaderComponent implements OnInit {
 
   isLoggedIn: boolean = false;
   ngOnInit(): void {
+    this.checkScreenSize();
     this.isLoggedIn = !!localStorage.getItem("Bearer");
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    this.isMobileView = window.innerWidth <= 450;
   }
 
   logOut(): void {

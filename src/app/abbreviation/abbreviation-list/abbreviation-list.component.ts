@@ -14,12 +14,14 @@ import { AuthActionsService } from '../../auth-actions/auth-service/auth-actions
 import { User } from '../../models/user';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../../modals/confirm-modal/modal.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
   selector: 'app-abbreviation-list',
   standalone: true,
-  imports: [MatInputModule, MatFormFieldModule, FormsModule, MatButtonModule, CommonModule, MatCardModule, MatListModule, MatTableModule, MatDialogModule],
+  imports: [MatInputModule, MatFormFieldModule, FormsModule, MatButtonModule, CommonModule, MatCardModule, MatListModule, MatTableModule, MatDialogModule, MatMenuModule, MatIconModule],
   templateUrl: './abbreviation-list.component.html',
   styleUrl: './abbreviation-list.component.css'
 })
@@ -28,12 +30,18 @@ import { ModalComponent } from '../../modals/confirm-modal/modal.component';
 export class AbbreviationListComponent {
 
   abbreviationList: Abbreviation[] = [];
-  constructor(private abbreviationService: AbbreviationService, private authService: AuthActionsService, public dialog: MatDialog) { }
   searchTerm: string = "";
   hasSearched: boolean = false;
   displayedColumns: string[] = ['id', 'abbreviation', 'created_by', 'actions', 'options'];
   private _snackBar = inject(MatSnackBar);
   user: any = "";
+  menuOpened: boolean = false;
+
+  constructor(
+    private abbreviationService: AbbreviationService,
+    private authService: AuthActionsService,
+    public dialog: MatDialog
+  ) { }
 
   searchAbbreviations(): void {
     if (!this.searchTerm) {
@@ -61,13 +69,12 @@ export class AbbreviationListComponent {
   }
 
   listMyAbbreviations(): void {
-
     this.authService.getMe().subscribe((user: User) => {
       this.user = user;
     },
       (error) => {
         console.error(error);
-      })
+      });
 
     this.abbreviationService.getMyAbbreviations().subscribe((abbreviations: Abbreviation[]) => {
       this.abbreviationList = abbreviations;
@@ -83,7 +90,7 @@ export class AbbreviationListComponent {
         this.hasSearched = false;
         console.error(error);
       }
-    )
+    );
   }
 
   deleteAbbreviation(id: number): void {
@@ -94,7 +101,7 @@ export class AbbreviationListComponent {
       (error) => {
         this.openSnackBar(error.error.message, "close");
       }
-    )
+    );
   }
 
   openSnackBar(message: string, action: string) {
@@ -118,5 +125,13 @@ export class AbbreviationListComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'confirm') this.deleteAbbreviation(id);
     });
+  }
+
+  onMenuFocus(): void {
+    this.menuOpened = true;
+  }
+
+  onMenuBlur(): void {
+    this.menuOpened = false;
   }
 }
