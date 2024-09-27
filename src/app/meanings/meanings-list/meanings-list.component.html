@@ -1,0 +1,47 @@
+<div class="container">
+  
+  
+  <h4>{{ abbreviation.name }}</h4>
+    <div *ngIf="meanings.length && abbreviation" class="container-table">
+      <table mat-table [dataSource]="meanings" class="mat-elevation-z8">
+    
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Meaning </th>
+          <td mat-cell *matCellDef="let mean" data-label="Description">{{ mean.description }}</td>
+        </ng-container>
+      
+        <ng-container matColumnDef="created_by">
+          <th mat-header-cell *matHeaderCellDef> Created by </th>
+          <td mat-cell *matCellDef="let mean" data-label="Created by">{{ mean.user ? mean.user.username : "No info" }}</td>
+        </ng-container>
+      
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Comments </th>
+          <td mat-cell *matCellDef="let mean" class="actions-cell" data-label="Actions">
+            <a mat-button class="action__button action__button--green">Comments</a>
+          </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="options">
+          <th mat-header-cell *matHeaderCellDef>Options</th>
+          <td mat-cell *matCellDef="let mean" class="actions-cell" data-label="Options">
+            <div *ngIf="mean.user" class="options__container">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>settings</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+              <a mat-menu-item class="action__button action__button--green">Add comment</a>
+              <a mat-menu-item class="action__button action__button--update">Update</a>
+              <a mat-menu-item class="action__button action__button--warn" (click)="openDialogDelete(mean.abbreviation.id, mean.id, $event)">Delete</a>
+            </mat-menu>
+            </div>
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+        </div>
+    </div>
+  
+  

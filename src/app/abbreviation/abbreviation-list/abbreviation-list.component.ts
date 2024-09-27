@@ -34,7 +34,7 @@ export class AbbreviationListComponent {
   abbreviationList: Abbreviation[] = [];
   searchTerm: string = "";
   hasSearched: boolean = false;
-  displayedColumns: string[] = ['id', 'abbreviation', 'created_by', 'actions', 'options'];
+  displayedColumns: string[] = ['abbreviation', 'created_by', 'actions', 'options'];
   private _snackBar = inject(MatSnackBar);
   user: any = "";
   menuOpened: boolean = false;
