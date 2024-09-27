@@ -1,0 +1,14 @@
+<mat-card>
+    <mat-card-title>{{ data.title }}</mat-card-title>
+    
+    <mat-card-content>
+      <mat-form-field>
+        <input matInput placeholder="Enter the meaning" [(ngModel)]="inputValue" required />
+      </mat-form-field>
+    </mat-card-content>
+  
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="onConfirmClick()" [disabled]="!inputValue">Create</button>
+      <button mat-raised-button color="warn" (click)="onNoClick()">Dismiss</button>
+    </mat-card-actions>
+  </mat-card>

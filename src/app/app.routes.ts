@@ -6,6 +6,7 @@ import { authGuard, redirectIfAuthenticatedGuard } from './auth-actions/auth/gua
 import { AbbreviationListComponent } from './abbreviation/abbreviation-list/abbreviation-list.component';
 import { ProfileComponent } from './auth-actions/profile/profile.component';
 import { AbbrevationFormComponent } from './abbreviation/abbrevation-form/abbrevation-form.component';
+import { CreateModalComponent } from './modals/create-modal/create-modal.component';
 
 export const routes: Routes = [
     { path: "", redirectTo: "home", pathMatch: "full" },

@@ -16,6 +16,8 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../../modals/confirm-modal/modal.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { CreateModalComponent } from '../../modals/create-modal/create-modal.component';
+import { MeaningsService } from '../../meanings/meanings.service';
 
 
 @Component({
@@ -36,10 +38,12 @@ export class AbbreviationListComponent {
   private _snackBar = inject(MatSnackBar);
   user: any = "";
   menuOpened: boolean = false;
+  errorMessages: string[] = [];
 
   constructor(
     private abbreviationService: AbbreviationService,
     private authService: AuthActionsService,
+    private meaningService: MeaningsService,
     public dialog: MatDialog
   ) { }
 
@@ -124,6 +128,31 @@ export class AbbreviationListComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'confirm') this.deleteAbbreviation(id);
+    });
+  }
+
+  openDialogCreateMeaning(id: number, event: MouseEvent): void {
+    event.preventDefault();
+
+    const dialogRef = this.dialog.open(CreateModalComponent, {
+      data: {
+        title: `Create meaning for abbreviation with ID ${id}?`,
+        closeText: 'Dismiss',
+        confirmText: 'Create'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result !== 'dismiss') {
+        this.meaningService.createMeaningForAbbreviation(result, id).subscribe(() => {
+          this.openSnackBar("Meaning for abbreviation created successfully!", "close");
+        },
+          (error) => {
+            error.error.messages.forEach((m: string) => this.errorMessages.push(m));
+            this.errorMessages.forEach((m: string) => this.openSnackBar(m, 'close'));
+          }
+        )
+      }
     });
   }
 

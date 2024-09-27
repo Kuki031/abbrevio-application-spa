@@ -38,12 +38,12 @@ export class AbbreviationService {
     return this.http.patch<void>(`${this.apiUrl}/${id}`, reqBody, { headers: { "Authorization": `Bearer ${localStorage.getItem("Bearer")}`, 'Content-type': 'application/json' } })
   }
 
-  createAbbreviation(name: string, userId: number): Observable<void> {
+  createAbbreviation(name: string, userId: number): Observable<Abbreviation> {
     const reqBody = {
       name: name,
       user_id: userId
     }
-    return this.http.post<void>(`${this.apiUrl}`, reqBody, { headers: { "Authorization": `Bearer ${localStorage.getItem("Bearer")}` } })
+    return this.http.post<Abbreviation>(`${this.apiUrl}`, reqBody, { headers: { "Authorization": `Bearer ${localStorage.getItem("Bearer")}` } })
   }
 
 }

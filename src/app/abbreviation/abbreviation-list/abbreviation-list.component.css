@@ -17,6 +17,15 @@
     justify-content: center;
 }
 
+.options__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+}
+
 .input-with-menu {
     position: relative;
     width: 300px;
@@ -27,11 +36,23 @@
 }
 
 .mat-menu {
-    min-width: 200px;
+    min-width: 150px;
+    text-align: center;
 }
 
 .mat-menu-item {
+    display: flex;
+    justify-content: center;
     transition: background-color 0.3s;
+}
+
+.mat-menu-item:hover {
+    background-color: #e0f7fa;
+}
+
+button[mat-icon-button] {
+    display: block;
+    margin: 0 auto;
 }
 
 .mat-menu-item:hover {

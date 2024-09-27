@@ -17,7 +17,6 @@ import { ChangeDetectorRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbbreviationService } from '../abbreviation.service';
 import { User } from '../../models/user';
-import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-abbrevation-form',
@@ -35,6 +34,7 @@ export class AbbrevationFormComponent {
   url: string = window.location.pathname;
   abbreviationIfUpdate: any = "";
 
+
   errorMessage = signal('');
   errorMessages: string[] = [];
 
@@ -47,6 +47,15 @@ export class AbbrevationFormComponent {
   }
 
   ngOnInit(): void {
+
+    this.authService.getMe().subscribe((user: User) => {
+      this.user = user;
+    },
+      (error) => {
+        console.error(error);
+      }
+    )
+
     const urlParsed = this.url.split("/");
     let id: number = parseInt(urlParsed[urlParsed.length - 1]);
 
@@ -66,29 +75,24 @@ export class AbbrevationFormComponent {
   }
 
   createAbbreviation(): void {
-    this.authService.getMe().subscribe((user: User) => {
-      this.user = user;
-    },
-      (error) => {
-        console.error(error);
-      }
-    )
 
     const nameValue = this.name?.value || "";
     const userIdValue = this.user.id;
 
-    this.abbrevationService.createAbbreviation(nameValue, userIdValue).subscribe(() => {
+    this.abbrevationService.createAbbreviation(nameValue, userIdValue).subscribe((data) => {
       this.openSnackBar("Abbreviation created successfully!", "close");
       setTimeout(() => {
         location.assign("abbreviations");
       }, 1000)
     },
+
       (error) => {
         error.error.messages.forEach((m: string) => this.errorMessages.push(m));
         this.errorMessages.forEach((m: string) => this.openSnackBar(m, 'close'));
       }
     )
   }
+
 
   updateAbbreviation(): void {
     const nameValue = this.name?.value || "";
