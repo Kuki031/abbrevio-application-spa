@@ -7,6 +7,7 @@ import { AbbreviationListComponent } from './abbreviation/abbreviation-list/abbr
 import { ProfileComponent } from './auth-actions/profile/profile.component';
 import { AbbrevationFormComponent } from './abbreviation/abbrevation-form/abbrevation-form.component';
 import { CreateModalComponent } from './modals/create-modal/create-modal.component';
+import { MeaningsListComponent } from './meanings/meanings-list/meanings-list.component';
 
 export const routes: Routes = [
     { path: "", redirectTo: "home", pathMatch: "full" },
@@ -16,5 +17,6 @@ export const routes: Routes = [
     { path: "abbreviations", component: AbbreviationListComponent, canActivate: [authGuard] },
     { path: "profile", component: ProfileComponent, canActivate: [authGuard] },
     { path: "abbreviations/new", component: AbbrevationFormComponent, canActivate: [authGuard] },
-    { path: "abbreviations/update/:id", component: AbbrevationFormComponent, canActivate: [authGuard] }
+    { path: "abbreviations/update/:id", component: AbbrevationFormComponent, canActivate: [authGuard] },
+    { path: "abbreviations/:id/meanings", component: MeaningsListComponent, canActivate: [authGuard] }
 ];

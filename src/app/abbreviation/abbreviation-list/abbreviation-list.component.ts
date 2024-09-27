@@ -34,7 +34,7 @@ export class AbbreviationListComponent {
   abbreviationList: Abbreviation[] = [];
   searchTerm: string = "";
   hasSearched: boolean = false;
-  displayedColumns: string[] = ['id', 'abbreviation', 'created_by', 'actions', 'options'];
+  displayedColumns: string[] = ['abbreviation', 'created_by', 'actions', 'options'];
   private _snackBar = inject(MatSnackBar);
   user: any = "";
   menuOpened: boolean = false;
@@ -97,10 +97,10 @@ export class AbbreviationListComponent {
     );
   }
 
-  deleteAbbreviation(id: number): void {
+  deleteAbbreviation(id: number, name: string): void {
     this.abbreviationService.deleteAbbreviation(id).subscribe(() => {
       this.abbreviationList = this.abbreviationList.filter(abbreviation => abbreviation.id !== id);
-      this.openSnackBar(`Successfully deleted abbreviation with ID ${id}.`, "close");
+      this.openSnackBar(`Successfully deleted abbreviation "${name}".`, "close");
     },
       (error) => {
         this.openSnackBar(error.error.message, "close");
@@ -115,28 +115,28 @@ export class AbbreviationListComponent {
     });
   }
 
-  openDialogDelete(id: number, event: MouseEvent): void {
+  openDialogDelete(id: number, name: string, event: MouseEvent): void {
     event.preventDefault();
 
     const dialogRef = this.dialog.open(ModalComponent, {
       data: {
-        title: `Delete abbreviation with ID ${id}?`,
+        title: `Delete abbreviation "${name}"?`,
         closeText: 'Dismiss',
         confirmText: 'Confirm'
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'confirm') this.deleteAbbreviation(id);
+      if (result === 'confirm') this.deleteAbbreviation(id, name);
     });
   }
 
-  openDialogCreateMeaning(id: number, event: MouseEvent): void {
+  openDialogCreateMeaning(id: number, name: string, event: MouseEvent): void {
     event.preventDefault();
 
     const dialogRef = this.dialog.open(CreateModalComponent, {
       data: {
-        title: `Create meaning for abbreviation with ID ${id}?`,
+        title: `Create meaning for abbreviation "${name}"?`,
         closeText: 'Dismiss',
         confirmText: 'Create'
       }

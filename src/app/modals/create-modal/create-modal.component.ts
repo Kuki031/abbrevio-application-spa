@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 export class CreateModalComponent {
   safeHtmlContent: SafeHtml = "";
   inputValue: string = "";
+  static predefinedInputValue = "";
 
   constructor(
     public dialogRef: MatDialogRef<CreateModalComponent>,

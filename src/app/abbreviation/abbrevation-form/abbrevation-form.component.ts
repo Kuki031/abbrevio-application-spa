@@ -98,7 +98,7 @@ export class AbbrevationFormComponent {
     const nameValue = this.name?.value || "";
 
     this.abbrevationService.updateAbbreviation(this.abbreviationIfUpdate.id, nameValue).subscribe(() => {
-      this.openSnackBar(`Abbreviation with id ${this.abbreviationIfUpdate.id} updated successfully!`, "close");
+      this.openSnackBar(`Abbreviation "${nameValue}" updated successfully!`, "close");
       setTimeout(() => {
         location.assign("abbreviations");
       }, 1000)
