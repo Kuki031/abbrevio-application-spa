@@ -34,7 +34,7 @@ export class AbbreviationListComponent {
   abbreviationList: Abbreviation[] = [];
   searchTerm: string = "";
   hasSearched: boolean = false;
-  displayedColumns: string[] = ['abbreviation', 'created_by', 'actions', 'options'];
+  displayedColumns: string[] = ['abbreviation', 'created_by', 'actions'];
   private _snackBar = inject(MatSnackBar);
   user: any = "";
   menuOpened: boolean = false;
@@ -47,39 +47,48 @@ export class AbbreviationListComponent {
     public dialog: MatDialog
   ) { }
 
+  ngOnInit(): void {
+    this.authService.getMe().subscribe((user: User) => {
+      this.user = user;
+    },
+      (error) => {
+        this.openSnackBar("Something went wrong!", "close");
+      });
+  }
+
   searchAbbreviations(): void {
     if (!this.searchTerm) {
       this.openSnackBar("Empty input!", "close");
       this.hasSearched = false;
       return;
     }
+
     this.abbreviationService.getMatchedAbbreviations(this.searchTerm).subscribe(
       (abbreviations: Abbreviation[]) => {
         this.abbreviationList = abbreviations;
-
+        if (this.abbreviationList.some(abbr => abbr.user && abbr.user.id === this.user.id)) {
+          if (!this.displayedColumns.find(val => val === "options")) {
+            this.displayedColumns.push('options');
+          }
+        } else if (!this.abbreviationList.some(abbr => abbr.user && abbr.user.id === this.user.id) && this.displayedColumns.find(val => val === "options")) {
+          const index = this.displayedColumns.findIndex(val => val === "options");
+          this.displayedColumns.splice(index, 1);
+        }
         if (!this.abbreviationList.length) {
           this.openSnackBar(`No matches for search term '${this.searchTerm}'.`, "close");
           this.hasSearched = false;
           return;
         }
-
         this.hasSearched = true;
       },
       (error) => {
         this.hasSearched = false;
-        console.error(error);
+        this.openSnackBar("Something went wrong!", "close");
       }
     );
   }
 
   listMyAbbreviations(): void {
-    this.authService.getMe().subscribe((user: User) => {
-      this.user = user;
-    },
-      (error) => {
-        console.error(error);
-      });
-
     this.abbreviationService.getMyAbbreviations().subscribe((abbreviations: Abbreviation[]) => {
       this.abbreviationList = abbreviations;
 
@@ -88,11 +97,20 @@ export class AbbreviationListComponent {
         this.hasSearched = false;
         return;
       }
+      if (this.abbreviationList.some(abbr => abbr.user && abbr.user.id === this.user.id)) {
+        if (!this.displayedColumns.find(val => val === "options")) {
+          this.displayedColumns.push('options');
+        }
+      }
+      else if (!this.abbreviationList.some(abbr => abbr.user && abbr.user.id === this.user.id) && this.displayedColumns.find(val => val === "options")) {
+        const index = this.displayedColumns.findIndex(val => val === "options");
+        this.displayedColumns.splice(index, 1);
+      }
       this.hasSearched = true;
     },
       (error) => {
         this.hasSearched = false;
-        console.error(error);
+        this.openSnackBar("Something went wrong!", "close");
       }
     );
   }

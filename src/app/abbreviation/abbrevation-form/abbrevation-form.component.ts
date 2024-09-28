@@ -17,6 +17,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbbreviationService } from '../abbreviation.service';
 import { User } from '../../models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-abbrevation-form',
@@ -40,7 +41,7 @@ export class AbbrevationFormComponent {
 
   hide = signal(true);
 
-  constructor(private authService: AuthActionsService, private cdRef: ChangeDetectorRef, private abbrevationService: AbbreviationService) {
+  constructor(private authService: AuthActionsService, private cdRef: ChangeDetectorRef, private abbrevationService: AbbreviationService, private router: Router) {
     merge(this.name.statusChanges, this.name.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
@@ -52,7 +53,7 @@ export class AbbrevationFormComponent {
       this.user = user;
     },
       (error) => {
-        console.error(error);
+        this.openSnackBar("Something went wrong!", "close");
       }
     )
 
@@ -82,8 +83,10 @@ export class AbbrevationFormComponent {
     this.abbrevationService.createAbbreviation(nameValue, userIdValue).subscribe((data) => {
       this.openSnackBar("Abbreviation created successfully!", "close");
       setTimeout(() => {
-        location.assign("abbreviations");
-      }, 1000)
+        this.router.navigateByUrl('/abbreviations', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/abbreviations']);
+        });
+      }, 1000);
     },
 
       (error) => {

@@ -59,9 +59,19 @@ button[mat-icon-button] {
     transition: all .2s;
 }
 
+.like-button--liked {
+    transition: all .2s;
+    color: rgb(224, 95, 9);
+}
+
+.like-button--liked:hover {
+    background-color: inherit;
+    color: inherit;
+}
+
 .like-button:hover {
     background-color: inherit;
-    color: blue;
+    color: rgb(50, 50, 230);
 }
 
 .mat-menu-item:hover {

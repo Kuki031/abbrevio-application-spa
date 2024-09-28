@@ -32,20 +32,25 @@ import { AbbreviationService } from '../../abbreviation/abbreviation.service';
 export class MeaningsListComponent {
 
   meanings: Meaning[] = [];
-  displayedColumns: string[] = ['votes', 'description', 'created_by', 'actions', 'options', 'like'];
+  displayedColumns: string[] = ['votes', 'description', 'created_by', 'actions', 'like'];
   private _snackBar = inject(MatSnackBar);
   errorMessages: string[] = [];
-
+  user: any = "";
   abbreviation: any = "";
+  vote: any = "";
 
-  constructor(private meaningService: MeaningsService, private abbreviationService: AbbreviationService, public dialog: MatDialog) { }
+  constructor(private meaningService: MeaningsService, private abbreviationService: AbbreviationService, public dialog: MatDialog, private authService: AuthActionsService) { }
   ngOnInit(): void {
 
-    const url = window.location.pathname;
-    const id = url.match(/(\d+)/);
+    this.authService.getMe().subscribe((user: User) => {
+      this.user = user;
+    })
 
-    if (id) {
-      const abbrevId = id[0];
+    const url = window.location.pathname;
+    const ids = url.match(/(\d+)/);
+
+    if (ids) {
+      const abbrevId = ids[0];
 
       this.abbreviationService.getSingleAbbreviation(parseInt(abbrevId)).subscribe((data) => {
         this.abbreviation = data;
@@ -57,9 +62,28 @@ export class MeaningsListComponent {
       )
 
       this.meaningService.getAllMeaningsForAbbreviation(parseInt(abbrevId)).subscribe((data: Meaning[]) => {
-        console.log(data);
-
         this.meanings = data;
+        this.meanings.map(mean => {
+          this.meaningService.getVoteForMeaning(mean.id).subscribe((vote) => {
+
+            if (vote.userId === this.user.id) {
+              mean.isLiked = true;
+            }
+          },
+            (error) => {
+              console.error(error);
+            }
+          )
+        })
+        if (this.meanings.some(mean => mean.user && mean.user.id === this.user.id)) {
+          if (!this.displayedColumns.find(val => val === "options")) {
+            this.displayedColumns.push('options');
+          }
+        }
+        else if (!this.meanings.some(mean => mean.user && mean.user.id === this.user.id) && this.displayedColumns.find(val => val === "options")) {
+          const index = this.displayedColumns.findIndex(val => val === "options");
+          this.displayedColumns.splice(index, 1);
+        }
       },
         (error) => {
           error.error.messages.forEach((m: string) => this.errorMessages.push(m));
@@ -67,6 +91,19 @@ export class MeaningsListComponent {
         }
       )
     }
+  }
+
+  castVoteForMeaning(meaningId: number) {
+    this.meaningService.voteForMeaning(meaningId).subscribe(() => {
+      location.reload();
+
+    },
+      (error) => {
+        error.error.messages.forEach((m: string) => this.errorMessages.push(m));
+        this.errorMessages.forEach((m: string) => this.openSnackBar(m, 'close'));
+
+      }
+    )
   }
 
   deleteMeaning(abbrevId: number, meaningId: number, name: string): void {

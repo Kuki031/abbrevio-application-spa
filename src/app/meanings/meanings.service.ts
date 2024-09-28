@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { Meaning } from '../models/meaning';
+import { Data } from '@angular/router';
+import { Vote } from '../models/vote';
 
 @Injectable({
   providedIn: 'root'
@@ -30,10 +32,18 @@ export class MeaningsService {
   }
 
   getAllMeaningsForAbbreviation(abbrevId: number): Observable<Meaning[]> {
-    return this.http.get<Meaning[]>(`${this.apiUrl}/${abbrevId}/meanings`, { headers: this.headers })
+    return this.http.get<Meaning[]>(`${this.apiUrl}/${abbrevId}/meanings`, { headers: this.headers });
   }
 
   deleteMeaningForAbbreviation(abbrevId: number, meaningId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${abbrevId}/meanings/${meaningId}`, { headers: this.headers })
+    return this.http.delete<void>(`${this.apiUrl}/${abbrevId}/meanings/${meaningId}`, { headers: this.headers });
+  }
+
+  voteForMeaning(meaningId: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/votes/${meaningId}/meanings`, null, { headers: this.headers });
+  }
+
+  getVoteForMeaning(meaningId: number): Observable<Vote> {
+    return this.http.get<Vote>(`${this.apiUrl}/votes/${meaningId}/meanings`, { headers: this.headers });
   }
 }

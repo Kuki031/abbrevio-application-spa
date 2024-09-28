@@ -1,7 +1,8 @@
 export interface Meaning {
     id: number,
     description: string,
-    user_id: number,
+    user: any,
     abbreviation_id: number,
-    countOfVotes: number
+    countOfVotes: number,
+    isLiked: boolean
 }

@@ -30,7 +30,7 @@
         <ng-container matColumnDef="options">
           <th mat-header-cell *matHeaderCellDef>Options</th>
           <td mat-cell *matCellDef="let mean" class="actions-cell" data-label="Options">
-            <div *ngIf="mean.user" class="options__container">
+            <div class="options__container">
               <button mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>settings</mat-icon>
               </button>
@@ -46,8 +46,8 @@
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let mean" data-label="Like">
                 <div class="options__container">
-                <button mat-icon-button class="like-button">
-                    <mat-icon>thumb_up</mat-icon>
+                <button mat-icon-button [ngClass]="mean.isLiked ? 'like-button--liked' : 'like-button'"  (click)="castVoteForMeaning(mean.id)">
+                    <mat-icon>{{ mean.isLiked ? "thumb_down" : "thumb_up" }}</mat-icon>
                 </button>
             </div>
             </td>
