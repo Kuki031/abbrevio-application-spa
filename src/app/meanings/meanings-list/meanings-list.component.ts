@@ -20,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CreateModalComponent } from '../../modals/create-modal/create-modal.component';
 import { MeaningsService } from '../../meanings/meanings.service';
 import { AbbreviationService } from '../../abbreviation/abbreviation.service';
+import { Vote } from '../../models/vote';
 
 
 @Component({
@@ -54,6 +55,7 @@ export class MeaningsListComponent {
 
       this.abbreviationService.getSingleAbbreviation(parseInt(abbrevId)).subscribe((data) => {
         this.abbreviation = data;
+
       },
         (error) => {
           error.error.messages.forEach((m: string) => this.errorMessages.push(m));
@@ -63,18 +65,19 @@ export class MeaningsListComponent {
 
       this.meaningService.getAllMeaningsForAbbreviation(parseInt(abbrevId)).subscribe((data: Meaning[]) => {
         this.meanings = data;
-        this.meanings.map(mean => {
-          this.meaningService.getVoteForMeaning(mean.id).subscribe((vote) => {
+        this.meanings.forEach(mean => {
+          this.meaningService.getVoteForMeaning(mean.id).subscribe((vote: Vote) => {
 
-            if (vote.userId === this.user.id) {
+            if (vote && vote.userId === this.user.id) {
               mean.isLiked = true;
-            }
+            } else { mean.isLiked = false }
           },
             (error) => {
               console.error(error);
             }
           )
         })
+
         if (this.meanings.some(mean => mean.user && mean.user.id === this.user.id)) {
           if (!this.displayedColumns.find(val => val === "options")) {
             this.displayedColumns.push('options');
@@ -127,7 +130,7 @@ export class MeaningsListComponent {
     );
   }
 
-  openDialogDelete(abbrevId: number, meaningId: number, name: string, event: MouseEvent): void {
+  openDialogDelete(abbrevId: number, meaningId: number, name: string, event: Event): void {
     event.preventDefault();
 
     const dialogRef = this.dialog.open(ModalComponent, {

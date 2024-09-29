@@ -7,7 +7,7 @@
       <p>Username: {{ user.username }}</p>
       <p>E-mail: {{ user.email }}</p>
       <p>Roles: <span *ngFor="let role of user.roles;index as i">{{ role.name === "ROLE_USER" ? "User" : "Administrator" }}</span></p>
-      <p>Department: {{ user.department.name }}</p>
+      <p>Department: {{ user.department ? user.department.name : "No department assigned" }}</p>
     </mat-card-content>
   </mat-card>
 </div>
