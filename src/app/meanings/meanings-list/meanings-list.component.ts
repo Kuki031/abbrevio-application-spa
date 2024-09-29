@@ -101,7 +101,17 @@ export class MeaningsListComponent {
       (error) => {
         error.error.messages.forEach((m: string) => this.errorMessages.push(m));
         this.errorMessages.forEach((m: string) => this.openSnackBar(m, 'close'));
+      }
+    )
+  }
 
+  castUnVoteForMeaning(meaningId: number) {
+    this.meaningService.unVoteForMeaning(meaningId).subscribe(() => {
+      location.reload();
+    },
+      (error) => {
+        error.error.messages.forEach((m: string) => this.errorMessages.push(m));
+        this.errorMessages.forEach((m: string) => this.openSnackBar(m, 'close'));
       }
     )
   }

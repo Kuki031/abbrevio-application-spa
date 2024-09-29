@@ -43,6 +43,10 @@ export class MeaningsService {
     return this.http.post<any>(`${this.apiUrl}/votes/${meaningId}/meanings`, null, { headers: this.headers });
   }
 
+  unVoteForMeaning(meaningId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/votes/${meaningId}/meanings`, { headers: this.headers });
+  }
+
   getVoteForMeaning(meaningId: number): Observable<Vote> {
     return this.http.get<Vote>(`${this.apiUrl}/votes/${meaningId}/meanings`, { headers: this.headers });
   }
