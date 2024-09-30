@@ -28,9 +28,18 @@ export class CommentService {
   updateComment(meaningId: number, commentId: number, content: string): Observable<Comment> {
 
     const reqBody = {
-      content: content
+      content
     }
 
     return this.http.patch<Comment>(`${this.apiUrl}/${meaningId}/comments/${commentId}`, reqBody, { headers: this.headers });
+  }
+
+  createComment(meaningId: number, content: string): Observable<void> {
+
+    const reqBody = {
+      content
+    }
+
+    return this.http.post<void>(`${this.apiUrl}/${meaningId}/comments`, reqBody, { headers: this.headers });
   }
 }

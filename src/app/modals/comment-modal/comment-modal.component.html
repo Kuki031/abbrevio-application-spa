@@ -12,9 +12,7 @@
 
           <div *ngIf="item.user.username === user.username" class="comment-actions">
             <mat-icon *ngIf="!item.isEditing" class="edit-icon" (click)="item.isEditing = true">edit</mat-icon>
-            
             <mat-icon *ngIf="!item.isEditing" class="delete-icon" (click)="openDialogDelete(data.meaning, item.id, $event)">delete</mat-icon>
-            
             <button class="confirm-button" *ngIf="item.isEditing" mat-button color="accent" (click)="updateComment(data.meaning, item.id, item.content, item)">Update</button>
           </div>
         </mat-card-content>
@@ -23,6 +21,13 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="onNoClick()">{{ data.closeText || 'Close' }}</button>
-    <button mat-raised-button color="accent" class="post-comment-button">Post Comment</button>
+    <button mat-raised-button color="accent" class="post-comment-button" (click)="isAddingComment = !isAddingComment">
+      {{ isAddingComment ? 'Cancel' : 'Post Comment' }}
+    </button>
   </mat-card-actions>
+
+  <div *ngIf="isAddingComment" class="new-comment-container">
+    <textarea [(ngModel)]="newCommentContent" placeholder="Enter your comment here..." class="new-comment-input"></textarea>
+    <button mat-raised-button color="primary" class="submit-comment-button" (click)="createComment(data.meaning)">Submit</button>
+  </div>
 </mat-card>

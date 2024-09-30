@@ -24,6 +24,7 @@ export class CommentModalComponent {
 
   @Output() commentUpdated = new EventEmitter<void>();
   @Output() commentDeleted = new EventEmitter<void>();
+  @Output() commentCreated = new EventEmitter<void>();
 
   safeHtmlContent: SafeHtml = "";
   user: any = "";
@@ -32,6 +33,8 @@ export class CommentModalComponent {
   comments: any[] = [];
   editCommentId: number | null = null;
   isEditing: boolean = false;
+  newCommentContent: string = '';
+  isAddingComment: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<CommentModalComponent>,
@@ -81,6 +84,24 @@ export class CommentModalComponent {
         this.errorMessages.forEach((m: string) => this.openSnackBar(m, 'close'));
       }
     )
+  }
+
+  createComment(meaningId: number): void {
+    if (this.newCommentContent.trim() === '') {
+      this.openSnackBar('Comment cannot be empty!', 'close');
+      return;
+    }
+
+    this.commentService.createComment(meaningId, this.newCommentContent).subscribe(() => {
+      this.openSnackBar('Comment added successfully!', 'close');
+      this.newCommentContent = '';
+      this.isAddingComment = false;
+      this.dialogRef.close();
+
+    }, (error) => {
+      error.error.messages.forEach((m: string) => this.errorMessages.push(m));
+      this.errorMessages.forEach((m: string) => this.openSnackBar(m, 'close'));
+    });
   }
 
   updateComment(meaningId: number, commentId: number, updatedContent: string, item: any): void {

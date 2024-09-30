@@ -180,6 +180,14 @@ export class MeaningsListComponent {
         })
         dialogRef.close();
       })
+
+      dialogRef.componentInstance.commentCreated.subscribe(() => {
+        this.commentService.getAllCommentsForMeaning(meaningId).subscribe((comments: Comment[]) => {
+          this.comments = comments;
+          this.comments.forEach(comment => comment.isEditing = false);
+        })
+        dialogRef.close();
+      })
       dialogRef.afterClosed().subscribe(result => {
 
       });
