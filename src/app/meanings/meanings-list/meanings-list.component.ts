@@ -154,8 +154,10 @@ export class MeaningsListComponent {
 
   openDialogComments(meaningId: number, event: Event): void {
     event.preventDefault();
-    this.commentService.getAllCommentsForMeaning(meaningId).subscribe((data: Comment[]) => {
-      this.comments = data;
+
+    this.commentService.getAllCommentsForMeaning(meaningId).subscribe((comments: Comment[]) => {
+      this.comments = comments;
+      this.comments.forEach(comment => comment.isEditing = false);
 
       const dialogRef = this.dialog.open(CommentModalComponent, {
         data: {
@@ -166,12 +168,23 @@ export class MeaningsListComponent {
           meaning: meaningId
         }
       });
+
+      dialogRef.componentInstance.commentUpdated.subscribe(() => {
+        dialogRef.close();
+      });
+
+      dialogRef.componentInstance.commentDeleted.subscribe(() => {
+        this.commentService.getAllCommentsForMeaning(meaningId).subscribe((comments: Comment[]) => {
+          this.comments = comments;
+          this.comments.forEach(comment => comment.isEditing = false);
+        })
+        dialogRef.close();
+      })
       dialogRef.afterClosed().subscribe(result => {
 
       });
     })
   }
-
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {

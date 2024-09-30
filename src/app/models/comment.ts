@@ -2,5 +2,6 @@ export interface Comment {
     id: number,
     content: string,
     userId: number,
-    meaningId: number
+    meaningId: number,
+    isEditing: boolean
 }

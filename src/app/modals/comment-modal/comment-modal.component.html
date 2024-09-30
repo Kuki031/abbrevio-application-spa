@@ -1,25 +1,28 @@
 <mat-card class="modal-card">
   <mat-card-header>
-      <mat-card-title>{{ data.title || 'Modal Title' }}</mat-card-title>
+    <mat-card-title>{{ data.title || 'Modal Title' }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-      <div class="comments-container">
-        <mat-card class="comment-card" *ngFor="let item of data.content">
-          <mat-card-content>
-              <p class="comment-content">{{ item.content }}</p>
-              <p class="comment-user" *ngIf="item?.user">- {{ item.user.username }}</p>
-              
-              <div *ngIf="item.user.username === user.username" class="comment-actions">
-                  <mat-icon class="edit-icon">edit</mat-icon>
-                  <mat-icon class="delete-icon">delete</mat-icon>
-              </div>
-          </mat-card-content>
+    <div class="comments-container">
+      <mat-card class="comment-card" *ngFor="let item of data.content">
+        <mat-card-content>
+          <p *ngIf="!item.isEditing" class="comment-content">{{ item.content }}</p>
+          <textarea *ngIf="item.isEditing" [(ngModel)]="item.content" class="comment-input"></textarea>
+          <p class="comment-user" *ngIf="item?.user">- {{ item.user.username }}</p>
+
+          <div *ngIf="item.user.username === user.username" class="comment-actions">
+            <mat-icon *ngIf="!item.isEditing" class="edit-icon" (click)="item.isEditing = true">edit</mat-icon>
+            
+            <mat-icon *ngIf="!item.isEditing" class="delete-icon" (click)="openDialogDelete(data.meaning, item.id, $event)">delete</mat-icon>
+            
+            <button class="confirm-button" *ngIf="item.isEditing" mat-button color="accent" (click)="updateComment(data.meaning, item.id, item.content, item)">Update</button>
+          </div>
+        </mat-card-content>
       </mat-card>
-      
-      </div>
+    </div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="onNoClick()">{{ data.closeText || 'Close' }}</button>
     <button mat-raised-button color="accent" class="post-comment-button">Post Comment</button>
-</mat-card-actions>
+  </mat-card-actions>
 </mat-card>

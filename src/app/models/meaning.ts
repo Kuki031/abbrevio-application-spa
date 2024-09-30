@@ -4,5 +4,6 @@ export interface Meaning {
     user: any,
     abbreviation_id: number,
     countOfVotes: number,
-    isLiked: boolean
+    isLiked: boolean,
+    comments: any
 }
