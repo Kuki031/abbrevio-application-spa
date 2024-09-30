@@ -20,4 +20,26 @@ export class CommentService {
   getAllCommentsForMeaning(meaningId: number): Observable<Comment[]> {
     return this.http.get<Comment[]>(`${this.apiUrl}/${meaningId}/comments`, { headers: this.headers });
   }
+
+  deleteComment(meaningId: number, commentId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${meaningId}/comments/${commentId}`, { headers: this.headers })
+  }
+
+  updateComment(meaningId: number, commentId: number, content: string): Observable<Comment> {
+
+    const reqBody = {
+      content
+    }
+
+    return this.http.patch<Comment>(`${this.apiUrl}/${meaningId}/comments/${commentId}`, reqBody, { headers: this.headers });
+  }
+
+  createComment(meaningId: number, content: string): Observable<void> {
+
+    const reqBody = {
+      content
+    }
+
+    return this.http.post<void>(`${this.apiUrl}/${meaningId}/comments`, reqBody, { headers: this.headers });
+  }
 }
