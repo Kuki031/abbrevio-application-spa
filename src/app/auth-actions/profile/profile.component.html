@@ -1,13 +1,17 @@
 <div class="container">
-<mat-card class="example-card" appearance="outlined">
+  <mat-card class="profile-card" appearance="outlined">
     <mat-card-header>
-      <mat-card-title>My profile</mat-card-title>
+      <mat-card-title class="profile-title">My Profile</mat-card-title>
     </mat-card-header>
-    <mat-card-content>
-      <p>Username: {{ user.username }}</p>
-      <p>E-mail: {{ user.email }}</p>
-      <p>Roles: <span *ngFor="let role of user.roles;index as i">{{ role.name === "ROLE_USER" ? "User" : "Administrator" }}</span></p>
-      <p>Department: {{ user.department ? user.department.name : "No department assigned" }}</p>
+    <mat-card-content class="profile-content">
+      <p><strong>Username:</strong> {{ user.username }}</p>
+      <p><strong>E-mail:</strong> {{ user.email }}</p>
+      <p><strong>Roles:</strong>
+        <span *ngFor="let role of user.roles; index as i">
+          {{ role.name === "ROLE_USER" ? "User" : "Administrator" }}<span *ngIf="i < user.roles.length - 1">, </span>
+        </span>
+      </p>
+      <p><strong>Department:</strong> {{ user.department ? user.department.name : "No department assigned" }}</p>
     </mat-card-content>
   </mat-card>
 </div>
