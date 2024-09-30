@@ -1,0 +1,61 @@
+<div class="container">
+  
+  
+  <h4>{{ abbreviation.name }}</h4>
+    <div *ngIf="meanings.length && abbreviation" class="container-table">
+      <table mat-table [dataSource]="meanings" class="mat-elevation-z8">
+    
+        <ng-container matColumnDef="votes">
+            <th mat-header-cell *matHeaderCellDef> Votes </th>
+            <td mat-cell *matCellDef="let mean" data-label="Votes">{{ mean.countOfVotes }}</td>
+          </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Description </th>
+          <td mat-cell *matCellDef="let mean" data-label="Description">{{ mean.description }}</td>
+        </ng-container>
+      
+        <ng-container matColumnDef="created_by">
+          <th mat-header-cell *matHeaderCellDef> Created by </th>
+          <td mat-cell *matCellDef="let mean" data-label="Created by">{{ mean.user ? mean.user.username : "No info" }}</td>
+        </ng-container>
+      
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Comments </th>
+          <td mat-cell *matCellDef="let mean" class="actions-cell" data-label="Actions">
+            <a mat-button class="action__button action__button--green" (click)="openDialogComments(mean.id, $event)">Comments</a>
+          </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="options">
+          <th mat-header-cell *matHeaderCellDef>Options</th>
+          <td mat-cell *matCellDef="let mean" class="actions-cell" data-label="Options">
+            <div class="options__container">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>settings</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+              <a mat-menu-item class="action__button action__button--warn" (click)="openDialogDelete(mean.abbreviationId, mean.id, mean.description, $event)">Delete</a>
+            </mat-menu>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="like">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let mean" data-label="Like">
+                <div class="options__container">
+                <button mat-icon-button [ngClass]="mean.isLiked ? 'like-button--liked' : 'like-button'" (click)="mean.isLiked ? castUnVoteForMeaning(mean.id) : castVoteForMeaning(mean.id)">
+                    <mat-icon>{{ mean.isLiked ? "thumb_down" : "thumb_up" }}</mat-icon>
+                </button>
+            </div>
+            </td>
+          </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+        </div>
+    </div>
+  
+  

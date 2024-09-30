@@ -11,6 +11,37 @@ body {
 }
 
 a[mat-raised-button],
-button[mat-raised-button] {
+button[mat-raised-button],
+button[mat-button],
+button[mat-stroked-button] {
     border-radius: 2px;
+}
+
+.block {
+    display: block;
+}
+
+.action__button {
+    transition: all .2s;
+    background-color: inherit;
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

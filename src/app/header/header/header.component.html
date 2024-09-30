@@ -1,20 +1,39 @@
 <header class="header">
-    <div class="header-container">
-      <div class="header-container__info">
-        <a mat-raised-button href="home">Home</a>
-        <button mat-raised-button (click)="openDialog()">About</button>
-      </div>
-      <div>
-      </div>
-      <div class="header-container__options">
-        <ng-container *ngIf="isLoggedIn; else loggedOut">
-          <a mat-raised-button href="abbreviations">Abbreviations</a>
-          <a mat-raised-button (click)="logOut()">Logout</a>
-        </ng-container>
-        <ng-template #loggedOut>
-          <a mat-raised-button href="login">Login</a>
-          <a mat-raised-button href="register">Register</a>
-        </ng-template>
-      </div>
+  <div class="header-container">
+    <div class="header-container__info" *ngIf="!isMobileView">
+      <a mat-button href="home">Home</a>
+      <a mat-button (click)="openDialog()">About</a>
     </div>
-  </header>
+
+    <div class="header-container__options" *ngIf="!isMobileView">
+      <ng-container *ngIf="isLoggedIn; else loggedOut">
+        <a mat-button href="profile">My profile</a>
+        <a mat-button href="abbreviations">Abbreviations</a>
+        <a mat-button (click)="logOut()">Logout</a>
+      </ng-container>
+      <ng-template #loggedOut>
+        <a mat-button href="login">Login</a>
+        <a mat-button href="register">Register</a>
+      </ng-template>
+    </div>
+
+    <div class="header-mobile-menu" *ngIf="isMobileView">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <a mat-menu-item href="home">Home</a>
+        <a mat-menu-item (click)="openDialog()">About</a>
+        <ng-container *ngIf="isLoggedIn; else mobileLoggedOut">
+          <a mat-menu-item href="profile">My profile</a>
+          <a mat-menu-item href="abbreviations">Abbreviations</a>
+          <a mat-menu-item (click)="logOut()">Logout</a>
+        </ng-container>
+        <ng-template #mobileLoggedOut>
+          <a mat-menu-item href="login">Login</a>
+          <a mat-menu-item href="register">Register</a>
+        </ng-template>
+      </mat-menu>
+    </div>
+  </div>
+</header>
