@@ -21,6 +21,11 @@ import { CreateModalComponent } from '../../modals/create-modal/create-modal.com
 import { MeaningsService } from '../../meanings/meanings.service';
 import { AbbreviationService } from '../../abbreviation/abbreviation.service';
 import { Vote } from '../../models/vote';
+import { CommentListComponent } from '../../comment/comment-list/comment-list.component';
+import { WelcomeModalComponent } from '../../modals/welcome-modal/welcome-modal.component';
+import { CommentService } from '../../comment/comment.service';
+import { Comment } from '../../models/comment';
+import { CommentModalComponent } from '../../modals/comment-modal/comment-modal.component';
 
 
 @Component({
@@ -39,8 +44,9 @@ export class MeaningsListComponent {
   user: any = "";
   abbreviation: any = "";
   vote: any = "";
+  comments: Comment[] = [];
 
-  constructor(private meaningService: MeaningsService, private abbreviationService: AbbreviationService, public dialog: MatDialog, private authService: AuthActionsService) { }
+  constructor(private meaningService: MeaningsService, private abbreviationService: AbbreviationService, public dialog: MatDialog, private authService: AuthActionsService, private commentService: CommentService) { }
   ngOnInit(): void {
 
     this.authService.getMe().subscribe((user: User) => {
@@ -144,6 +150,26 @@ export class MeaningsListComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'confirm') this.deleteMeaning(abbrevId, meaningId, name);
     });
+  }
+
+  openDialogComments(meaningId: number, event: Event): void {
+    event.preventDefault();
+    this.commentService.getAllCommentsForMeaning(meaningId).subscribe((data: Comment[]) => {
+      this.comments = data;
+
+      const dialogRef = this.dialog.open(CommentModalComponent, {
+        data: {
+          title: "Comments",
+          closeText: 'Dismiss',
+          confirmText: 'Confirm',
+          content: this.comments,
+          meaning: meaningId
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+
+      });
+    })
   }
 
 
