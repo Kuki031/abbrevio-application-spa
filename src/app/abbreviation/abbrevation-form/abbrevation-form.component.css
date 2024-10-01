@@ -1,11 +1,20 @@
 .container {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    flex-direction: column;
     justify-content: center;
-    margin: 5px;
+    padding: 20px;
     animation: .5s fadein ease-in-out;
+}
+
+.custom-card {
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.form-container {
+    padding: 20px;
 }
 
 .register-container {
@@ -14,20 +23,37 @@
     flex-direction: column;
 }
 
+.title {
+    font-size: 1.5rem;
+    text-align: center;
+    color: #030303;
+    margin-bottom: 20px;
+}
+
+.form-field {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.input-field {
+    font-size: 1rem;
+    padding: 10px;
+}
+
+.confirm-button {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 1rem;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.confirm-button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .register-container__option {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 5px;
-}
-
-.register-container mat-form-field,
-mat-card-title,
-h3 {
-    margin: 10px;
-    padding: 5px;
-}
-
-.g {
-    margin: 5px;
+    margin-top: 10px;
 }

@@ -1,17 +1,20 @@
 <div class="container">
-  <mat-card appearance="outlined">
-    <form #loginForm="ngForm">
+  <mat-card class="custom-card" appearance="outlined">
+    <form #loginForm="ngForm" class="form-container">
       <div class="register-container">
-        <mat-card-title>{{ url === "/abbreviations/new" ? "Create new abbreviation" : "Update abbreviation" }}</mat-card-title>
+        <mat-card-title class="title">
+          {{ url === "/abbreviations/new" ? "Create New Abbreviation" : "Update Abbreviation" }}
+        </mat-card-title>
         
-        <mat-form-field>
-          <mat-label>Enter abbreviation name</mat-label>
+        <mat-form-field class="form-field">
+          <mat-label>Enter Abbreviation Name</mat-label>
           <input
             matInput
             [formControl]="name"
             (blur)="updateErrorMessage()"
             required
-            value="{{  abbreviationIfUpdate.name }}"
+            value="{{ abbreviationIfUpdate.name }}"
+            class="input-field"
           />
           <mat-error *ngIf="name.invalid">{{ errorMessage() }}</mat-error>
         </mat-form-field>
@@ -22,11 +25,10 @@
             type="submit"
             [disabled]="loginForm.invalid || isClicked"
             (click)="url === '/abbreviations/new' ? createAbbreviation() : updateAbbreviation()"
+            class="confirm-button"
           >
             Confirm
           </button>
-
-          <mat-spinner *ngIf="isClicked" diameter="30" class="g"></mat-spinner>
         </div>
       </div>
     </form>

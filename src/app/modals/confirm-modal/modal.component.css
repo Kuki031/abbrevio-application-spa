@@ -14,6 +14,10 @@ mat-card-title {
     margin: 0;
 }
 
+.action__button--warn {
+    color: rgb(224, 95, 9);
+}
+
 mat-card-actions {
     display: flex;
     flex-direction: row;

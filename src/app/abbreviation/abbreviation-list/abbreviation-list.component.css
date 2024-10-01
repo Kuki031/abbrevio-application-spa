@@ -63,20 +63,22 @@ button[mat-icon-button] {
     display: none;
 }
 
-
-
 .action__button--green {
-    color: #4CAF50;
+    color: rgb(5, 110, 5);
+}
+
+.action__button--azure {
+    color: #1E88E5;
 }
 
 .action__button--update {
     text-decoration: none;
     list-style: none;
-    color: #4021b1 !important;
+    color: #1E88E5 !important;
 }
 
 .action__button--warn {
-    color: #d30b2d;
+    color: rgb(224, 95, 9);
 }
 
 .container__form {

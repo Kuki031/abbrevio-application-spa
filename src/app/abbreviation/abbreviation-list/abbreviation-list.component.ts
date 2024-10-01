@@ -77,12 +77,15 @@ export class AbbreviationListComponent {
         if (!this.abbreviationList.length) {
           this.openSnackBar(`No matches for search term '${this.searchTerm}'.`, "close");
           this.hasSearched = false;
+          this.searchTerm = "";
           return;
         }
         this.hasSearched = true;
+        this.searchTerm = "";
       },
       (error) => {
         this.hasSearched = false;
+        this.searchTerm = "";
         this.openSnackBar("Something went wrong!", "close");
       }
     );

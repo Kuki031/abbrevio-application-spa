@@ -10,7 +10,7 @@
           <textarea *ngIf="item.isEditing" [(ngModel)]="item.content" class="comment-input"></textarea>
           <p class="comment-user" *ngIf="item?.user">- {{ item.user.username }}</p>
 
-          <div *ngIf="item.user.username === user.username" class="comment-actions">
+          <div *ngIf="item.user.username === user.username && !isAddingComment" class="comment-actions">
             <mat-icon *ngIf="!item.isEditing" class="edit-icon" (click)="item.isEditing = true">edit</mat-icon>
             <mat-icon *ngIf="!item.isEditing" class="delete-icon" (click)="openDialogDelete(data.meaning, item.id, $event)">delete</mat-icon>
             <button class="confirm-button" *ngIf="item.isEditing" mat-button color="accent" (click)="updateComment(data.meaning, item.id, item.content, item)">Update</button>

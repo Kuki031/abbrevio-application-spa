@@ -54,9 +54,7 @@ mat-card-title {
     line-height: 1.4;
     color: #333;
     word-wrap: break-word;
-    /* Allows long words to break to the next line */
     overflow-wrap: break-word;
-    /* Ensures wrapping of long words */
 }
 
 .comment-user {
@@ -68,16 +66,15 @@ mat-card-title {
 }
 
 .confirm-button {
-    background-color: #4CAF50;
+    background-color: #1E88E5;
     color: white;
     border-radius: 4px;
-    font-weight: bold;
     padding: 10px 20px;
     transition: background-color 0.3s;
 }
 
 .confirm-button:hover {
-    background-color: #45a049;
+    background-color: #1E88E5;
 }
 
 .comment-input {
@@ -113,7 +110,7 @@ mat-card-actions {
 }
 
 .delete-icon {
-    color: rgb(212, 13, 13);
+    color: rgb(224, 95, 9);
 }
 
 .edit-icon:hover,
@@ -122,13 +119,13 @@ mat-card-actions {
 }
 
 .post-comment-button {
-    background-color: #28a745;
+    background-color: #007BFF;
     color: #fff;
     margin-left: 10px;
 }
 
 .post-comment-button:hover {
-    background-color: #218838;
+    background-color: #007BFF;
     color: #fff;
 }
 
@@ -162,7 +159,6 @@ mat-card-actions {
 .submit-comment-button {
     background-color: #007BFF;
     color: white;
-    font-weight: bold;
     padding: 10px 20px;
     border: none;
     border-radius: 4px;

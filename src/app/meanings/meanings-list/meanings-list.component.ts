@@ -79,7 +79,7 @@ export class MeaningsListComponent {
             } else { mean.isLiked = false }
           },
             (error) => {
-              console.error(error);
+
             }
           )
         })
