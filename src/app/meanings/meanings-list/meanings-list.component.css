@@ -13,8 +13,7 @@
     font-size: 1.5rem;
     color: #030303;
     font-weight: bold;
-    padding-bottom: 10px;
-    margin-top: 5px;
+    margin: 20px;
 }
 
 .container__form {
@@ -123,12 +122,14 @@ td {
     vertical-align: middle;
 }
 
-th {
-    padding: 10px;
-}
-
 td {
     padding: 10px;
+    word-wrap: break-word;
+}
+
+.description-cell {
+    max-width: 200px;
+    overflow-wrap: break-word;
 }
 
 .container-table {

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Meaning } from '../../models/meaning';
 import { inject } from '@angular/core';
-import { Abbreviation } from '../../models/abbreviation';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -17,12 +16,9 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../../modals/confirm-modal/modal.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { CreateModalComponent } from '../../modals/create-modal/create-modal.component';
 import { MeaningsService } from '../../meanings/meanings.service';
 import { AbbreviationService } from '../../abbreviation/abbreviation.service';
 import { Vote } from '../../models/vote';
-import { CommentListComponent } from '../../comment/comment-list/comment-list.component';
-import { WelcomeModalComponent } from '../../modals/welcome-modal/welcome-modal.component';
 import { CommentService } from '../../comment/comment.service';
 import { Comment } from '../../models/comment';
 import { CommentModalComponent } from '../../modals/comment-modal/comment-modal.component';
@@ -157,7 +153,14 @@ export class MeaningsListComponent {
 
     this.commentService.getAllCommentsForMeaning(meaningId).subscribe((comments: Comment[]) => {
       this.comments = comments;
-      this.comments.forEach(comment => comment.isEditing = false);
+      this.comments.forEach(comment => {
+        comment.isEditing = false;
+
+        const dateObj = new Date(comment.createdAt);
+        const formattedDate = dateObj.toISOString().split("T")[0];
+        const formattedTime = dateObj.toTimeString().split(" ")[0];
+        comment.createdAt = `${formattedDate} ${formattedTime}`;
+      });
 
       const dialogRef = this.dialog.open(CommentModalComponent, {
         data: {

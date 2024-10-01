@@ -3,5 +3,6 @@ export interface Comment {
     content: string,
     userId: number,
     meaningId: number,
-    isEditing: boolean
+    isEditing: boolean,
+    createdAt: string
 }

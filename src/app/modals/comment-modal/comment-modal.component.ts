@@ -31,7 +31,7 @@ export class CommentModalComponent {
   private _snackBar = inject(MatSnackBar);
   errorMessages: string[] = [];
   comments: any[] = [];
-  editCommentId: number | null = null; // Track which comment is being edited
+  editCommentId: number | null = null;
   newCommentContent: string = '';
   isAddingComment: boolean = false;
 

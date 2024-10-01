@@ -1,6 +1,5 @@
 <div class="container">
   
-  
   <h4 class="abbreviation-title"> Abbreviation: {{ abbreviation.name }}</h4>
     <div *ngIf="meanings.length && abbreviation" class="container-table">
       <table mat-table [dataSource]="meanings" class="mat-elevation-z8">
@@ -12,7 +11,7 @@
 
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef> Description </th>
-          <td mat-cell *matCellDef="let mean" data-label="Description">{{ mean.description }}</td>
+          <td mat-cell *matCellDef="let mean" data-label="Description" class="description-cell">{{ mean.description }}</td>
         </ng-container>
       
         <ng-container matColumnDef="created_by">
