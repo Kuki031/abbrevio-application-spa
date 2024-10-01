@@ -31,8 +31,7 @@ export class CommentModalComponent {
   private _snackBar = inject(MatSnackBar);
   errorMessages: string[] = [];
   comments: any[] = [];
-  editCommentId: number | null = null;
-  isEditing: boolean = false;
+  editCommentId: number | null = null; // Track which comment is being edited
   newCommentContent: string = '';
   isAddingComment: boolean = false;
 
@@ -44,7 +43,6 @@ export class CommentModalComponent {
     private dialog: MatDialog,
     private commentService: CommentService
   ) {
-
     if (data.htmlContent) {
       this.safeHtmlContent = this.sanitizer.bypassSecurityTrustHtml(data.htmlContent);
     }
@@ -53,12 +51,11 @@ export class CommentModalComponent {
   ngOnInit(): void {
     this.authService.getMe().subscribe((user: User) => {
       this.user = user;
-    })
+    });
   }
 
   openDialogDelete(meaningId: number, commentId: number, event: Event): void {
     event.preventDefault();
-
     const dialogRef = this.dialog.open(ModalComponent, {
       data: {
         title: `Delete comment?`,
@@ -82,8 +79,7 @@ export class CommentModalComponent {
       (error) => {
         error.error.messages.forEach((m: string) => this.errorMessages.push(m));
         this.errorMessages.forEach((m: string) => this.openSnackBar(m, 'close'));
-      }
-    )
+      });
   }
 
   createComment(meaningId: number): void {
@@ -97,27 +93,26 @@ export class CommentModalComponent {
       this.newCommentContent = '';
       this.isAddingComment = false;
       this.dialogRef.close();
-
     }, (error) => {
       error.error.messages.forEach((m: string) => this.errorMessages.push(m));
       this.errorMessages.forEach((m: string) => this.openSnackBar(m, 'close'));
     });
   }
 
-  updateComment(meaningId: number, commentId: number, updatedContent: string, item: any): void {
-
-    item.isEditing = true;
+  updateComment(meaningId: number, commentId: number, updatedContent: string): void {
     const updatedComment = { content: updatedContent };
     this.commentService.updateComment(meaningId, commentId, updatedComment.content).subscribe(() => {
       this.openSnackBar('Comment updated successfully!', 'close');
       this.dialogRef.close();
-      item.isEditing = false;
-
+      this.editCommentId = null;
     }, (error) => {
-      item.isEditing = false;
       error.error.messages.forEach((m: string) => this.errorMessages.push(m));
       this.errorMessages.forEach((m: string) => this.openSnackBar(m, 'close'));
     });
+  }
+
+  onEditClick(commentId: number): void {
+    this.editCommentId = commentId;
   }
 
   onConfirmClick(): void {

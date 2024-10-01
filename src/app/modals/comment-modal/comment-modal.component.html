@@ -6,14 +6,15 @@
     <div class="comments-container">
       <mat-card class="comment-card" *ngFor="let item of data.content">
         <mat-card-content>
-          <p *ngIf="!item.isEditing" class="comment-content">{{ item.content }}</p>
-          <textarea *ngIf="item.isEditing" [(ngModel)]="item.content" class="comment-input"></textarea>
+          <p *ngIf="editCommentId !== item.id" class="comment-content">{{ item.content }}</p>
+          <textarea *ngIf="editCommentId === item.id" [(ngModel)]="item.content" class="comment-input"></textarea>
           <p class="comment-user" *ngIf="item?.user">- {{ item.user.username }}</p>
 
           <div *ngIf="item.user.username === user.username && !isAddingComment" class="comment-actions">
-            <mat-icon *ngIf="!item.isEditing" class="edit-icon" (click)="item.isEditing = true">edit</mat-icon>
-            <mat-icon *ngIf="!item.isEditing" class="delete-icon" (click)="openDialogDelete(data.meaning, item.id, $event)">delete</mat-icon>
-            <button class="confirm-button" *ngIf="item.isEditing" mat-button color="accent" (click)="updateComment(data.meaning, item.id, item.content, item)">Update</button>
+            <mat-icon *ngIf="editCommentId !== item.id" class="edit-icon" (click)="onEditClick(item.id)">edit</mat-icon>
+            <mat-icon *ngIf="editCommentId !== item.id" class="delete-icon" (click)="openDialogDelete(data.meaning, item.id, $event)">delete</mat-icon>
+            <button class="confirm-button" *ngIf="editCommentId === item.id" mat-button color="accent" 
+              (click)="updateComment(data.meaning, item.id, item.content)">Update</button>
           </div>
         </mat-card-content>
       </mat-card>
