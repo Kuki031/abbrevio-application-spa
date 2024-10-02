@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    flex-direction: row;
+    flex-direction: column;
     margin: 5px;
     gap: 10px;
     animation: fadein ease-in-out 1s;
@@ -38,6 +38,18 @@
 .mat-menu {
     min-width: 150px;
     text-align: center;
+}
+
+.print-button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 16px;
+    animation: fadein .2s ease-in-out;
+}
+
+.print-button-container button {
+    margin-right: 16px;
 }
 
 .mat-menu-item {
@@ -109,6 +121,8 @@ td {
 .container-table {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
     margin: auto;
     width: 75%;
     animation: fadein 1s ease-in-out;

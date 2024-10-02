@@ -1,3 +1,5 @@
+import { Meaning } from "./meaning"
+
 export interface Abbreviation {
     id: number,
     name: string,
@@ -5,4 +7,5 @@ export interface Abbreviation {
         id: number,
         username: string
     }
+    meanings: Meaning[]
 }

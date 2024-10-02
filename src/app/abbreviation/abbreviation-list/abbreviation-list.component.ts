@@ -18,6 +18,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { CreateModalComponent } from '../../modals/create-modal/create-modal.component';
 import { MeaningsService } from '../../meanings/meanings.service';
+import { Meaning } from '../../models/meaning';
+import { forkJoin, map } from 'rxjs';
 
 
 @Component({
@@ -34,11 +36,13 @@ export class AbbreviationListComponent {
   abbreviationList: Abbreviation[] = [];
   searchTerm: string = "";
   hasSearched: boolean = false;
-  displayedColumns: string[] = ['abbreviation', 'created_by', 'actions'];
+  displayedColumns: string[] = ['abbreviation', 'created_by', 'actions', 'print'];
   private _snackBar = inject(MatSnackBar);
   user: any = "";
   menuOpened: boolean = false;
   errorMessages: string[] = [];
+  selectedItems: Abbreviation[] = [];
+  selectedCount: number = 0;
 
   constructor(
     private abbreviationService: AbbreviationService,
@@ -127,6 +131,73 @@ export class AbbreviationListComponent {
         this.openSnackBar(error.error.message, "close");
       }
     );
+  }
+
+  onCheckboxChange(event: Event, abbs: Abbreviation): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+
+    if (isChecked) {
+      this.selectedItems.push(abbs);
+      this.selectedCount++;
+    } else {
+      this.selectedItems = this.selectedItems.filter(item => item.id !== abbs.id);
+      this.selectedCount--;
+    }
+  }
+
+  printSelectedItems(): void {
+    const meaningRequests = this.selectedItems.map(item =>
+      this.meaningService.getAllMeaningsForAbbreviation(item.id).pipe(
+        map((data: Meaning[]) => {
+          item.meanings = data;
+          return {
+            name: item.name,
+            createdBy: item.user?.username || 'No info',
+            meanings: data.map(meaning => meaning.description).join(', ')
+          };
+        })
+      )
+    );
+
+    forkJoin(meaningRequests).subscribe((results) => {
+      const printContents = results.map(item => `
+        <div style="margin-bottom: 20px; border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
+          <strong>Abbreviation:</strong> ${item.name} <br>
+          <strong>Created by:</strong> ${item.createdBy} <br>
+          <strong>Meanings:</strong> ${item.meanings || 'No meanings available.'}
+        </div>
+      `).join('');
+
+      const width = 800;
+      const height = 600;
+
+      const left = (window.innerWidth / 2) - (width / 2);
+      const top = (window.innerHeight / 2) - (height / 2);
+
+      const printWindow = window.open('', '', `width=${width},height=${height},left=${left},top=${top}`);
+      printWindow?.document.write(`
+        <html>
+          <head>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                line-height: 1.6;
+              }
+              h2 {
+                text-align: center;
+              }
+            </style>
+          </head>
+          <body>
+            <h2>Selected Abbreviations</h2>
+            ${printContents}
+          </body>
+        </html>
+      `);
+      printWindow?.document.close();
+      printWindow?.print();
+    });
   }
 
   openSnackBar(message: string, action: string) {
