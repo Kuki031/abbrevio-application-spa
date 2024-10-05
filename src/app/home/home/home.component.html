@@ -10,4 +10,25 @@
       <a mat-raised-button class="register-button" href="register">Register</a>
     </mat-card-actions>
   </mat-card>
+
+  <div *ngIf="isLoggedIn" class="recent-container">
+    <mat-card class="recent-card">
+      <mat-card-title>Recently Added Abbreviations</mat-card-title>
+      <ul class="recent-list">
+        <li *ngFor="let item of recentAdds" class="recent-item">
+          <a href="abbreviations/{{ item.id }}/meanings" class="recent-link">{{ item.name }}</a>
+          <p class="recent-user">Added by {{ item.user?.username }}</p>
+        </li>
+      </ul>
+    </mat-card>
+
+    <mat-card class="recent-card">
+      <mat-card-title>Recent Searches</mat-card-title>
+      <ul class="recent-list">
+        <li *ngFor="let item of recentSearches" class="recent-item">
+          <a href="abbreviations/{{ item.id }}/meanings" class="recent-link">{{ item.name }}</a>
+        </li>
+      </ul>
+    </mat-card>
+  </div>
 </div>

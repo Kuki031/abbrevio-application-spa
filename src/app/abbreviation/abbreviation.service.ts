@@ -46,4 +46,12 @@ export class AbbreviationService {
     return this.http.post<Abbreviation>(`${this.apiUrl}`, reqBody, { headers: { "Authorization": `Bearer ${localStorage.getItem("Bearer")}` } })
   }
 
+  getRecentSearches(): Observable<Abbreviation[]> {
+    return this.http.get<Abbreviation[]>(`${this.apiUrl}/recently-searched`, { headers: { "Authorization": `Bearer ${localStorage.getItem("Bearer")}` } });
+  }
+
+  getRecentlyAdded(): Observable<Abbreviation[]> {
+    return this.http.get<Abbreviation[]>(`${this.apiUrl}/recently-added`, { headers: { "Authorization": `Bearer ${localStorage.getItem("Bearer")}` } });
+  }
+
 }
